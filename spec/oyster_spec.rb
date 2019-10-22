@@ -1,6 +1,11 @@
 require "oyster"
 
 describe Oystercard do
+
+    let(:station){ double :station}
+
+
+
   it "creates an instance of oystercard" do
     expect(subject).to be_an_instance_of Oystercard
     # it {is_expected.to be_an_instance of Oystercard}
@@ -25,17 +30,14 @@ describe Oystercard do
     end
   end
 
-  describe '#deduct' do
- 
-
   describe '#touch_in' do 
     it 'adjusts the value of in_journey to true' do
       subject.top_up(90)
-      subject.touch_in
+      subject.touch_in(station)
       expect(subject.in_journey).to eq true
     end
     it 'does not let customers touch in if they dont have the min fare' do 
-    expect { subject.touch_in }.to raise_error "Not enough funds."
+    expect { subject.touch_in(station) }.to raise_error "Not enough funds."
     end 
   end
 
@@ -45,11 +47,15 @@ describe Oystercard do
       subject.touch_out
       expect(subject.in_journey).to eq false
     end
-   
     it 'reduced the balance of the oystercard by min charge' do
       oystercard = Oystercard.new(90)
       expect{oystercard.touch_out}.to change {oystercard.balance}.by -1
     end
   end
+
+  it 'stores the entry station' do
+    subject.top_up(20)
+    subject.touch_in(station)
+    expect(subject.entry_station).to eq station
   end
 end
