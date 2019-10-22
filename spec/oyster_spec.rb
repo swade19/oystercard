@@ -8,6 +8,7 @@ describe Oystercard do
   describe "#initialize" do
     it "initializes an Oystercard with a balance of 0" do
       expect(subject.balance).to eq 0
+      expect(subject.in_journey).to eq false
     end
   end
 

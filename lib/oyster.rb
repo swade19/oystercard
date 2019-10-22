@@ -1,11 +1,13 @@
 class Oystercard
-  attr_reader :balance
+  attr_reader :balance, :in_journey
+  
 
   DEFAULT_BALANCE = 0
   MAXIMUM_BALANCE = 90
 
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
+    @in_journey = false
   end
 
   def top_up(amount)
