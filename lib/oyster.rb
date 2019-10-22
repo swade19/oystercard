@@ -13,6 +13,10 @@ class Oystercard
     @balance = @balance + topup
   end
 
+  def deduct(deduct)
+    @balance = @balance - deduct
+  end
+
   def limit(topup)
     @balance + topup > MAXIMUM_BALANCE
   end

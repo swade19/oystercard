@@ -27,8 +27,8 @@ describe Oystercard do
   describe '#deduct' do
     it 'reduced the balance of the oystercard' do
       oystercard = Oystercard.new(100)
-      subject.deduct(20)
-      expect(subject.balance).to eq 80
+      oystercard.deduct(20)
+      expect(oystercard.balance).to eq 80
     end
   end
 end
