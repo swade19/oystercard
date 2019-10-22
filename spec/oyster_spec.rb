@@ -32,4 +32,18 @@ describe Oystercard do
       expect(oystercard.balance).to eq 80
     end
   end
+
+  describe '#touch_in' do 
+    it 'adjusts the value of in_journey to true' do
+      subject.touch_in
+      expect(subject.in_journey).to eq true
+    end
+  end
+
+  describe '#touch_out' do
+    it 'adjust the value of in_journey to false' do
+      subject.touch_out
+      expect(subject.in_journey).to eq false
+    end
+  end
 end
