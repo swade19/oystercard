@@ -60,4 +60,12 @@ let(:card) {Oystercard.new}
     card.touch_out(exit_station)
     expect(card.exit_station).to eq exit_station
   end 
+
+  it "stores the customer journey" do
+    card.top_up(40)
+    card.touch_in(entry_station)
+    card.touch_out(exit_station)
+    expect(card.journeys).not_to be_empty
+  end 
+
 end
