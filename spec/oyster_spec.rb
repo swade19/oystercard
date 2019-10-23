@@ -2,7 +2,9 @@ require "oyster"
 
 describe Oystercard do
 let(:card) {Oystercard.new}
-    let(:station){ double :station}
+    let(:entry_station){ double :station}
+    let(:exit_station) { double :station }
+    let(:journey) { {entry_station: entry_station, exit_station: exit_station}}
 
   it "creates an instance of oystercard" do
     expect(card).to be_an_instance_of Oystercard
@@ -30,11 +32,11 @@ let(:card) {Oystercard.new}
   describe '#touch_in' do 
     it 'adjusts the value of in_journey to true' do
       card.top_up(90)
-      card.touch_in(station)
-      expect(card.entry_station).to eq station
+      card.touch_in(entry_station)
+      expect(card.entry_station).to eq entry_station
     end
     it 'does not let customers touch in if they dont have the min fare' do 
-    expect { card.touch_in(station) }.to raise_error "Not enough funds."
+    expect { card.touch_in(entry_station) }.to raise_error "Not enough funds."
     end 
   end
 
@@ -42,13 +44,20 @@ let(:card) {Oystercard.new}
    
     it 'reduced the balance of the oystercard by min charge' do
       card.top_up(1)
-      expect{card.touch_out}.to change {card.balance}.by -1
+      expect{card.touch_out(exit_station)}.to change {card.balance}.by -1
     end
   end
 
   it 'stores the entry station' do
     card.top_up(20)
-    card.touch_in(station)
-    expect(card.entry_station).to eq station
+    card.touch_in(entry_station)
+    expect(card.entry_station).to eq entry_station
   end
+
+  it "Stores the exit station" do 
+    card.top_up(40)
+    card.touch_in(entry_station)
+    card.touch_out(exit_station)
+    expect(card.exit_station).to eq exit_station
+  end 
 end
